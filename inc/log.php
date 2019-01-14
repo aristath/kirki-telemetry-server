@@ -151,7 +151,7 @@ class Log {
 	private function save_data() {
 
 		// We want to log data per-month.
-		$date_key = date( 'Y' ) . date( 'm' );
+		$date_key = date( 'Y' ) . '-' . date( 'm' );
 
 		// Log data for PHP version and theme.
 		foreach ( [ 'php_version', 'theme_name', 'theme_author', 'theme_uri' ] as $data_key ) {
