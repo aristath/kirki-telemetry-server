@@ -1,0 +1,16 @@
+{
+    "name": "wplemon/q-theme",
+    "type": "wordpress-theme",
+    "description": "Q WordPress theme",
+    "homepage": "https://wplemon.com",
+    "license": "GPLv2 or later",
+    "require": {
+        "php": ">=7",
+        "composer/installers": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "wp-coding-standards/wpcs": "*"
+    }
+}

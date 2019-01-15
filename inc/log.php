@@ -25,7 +25,7 @@ class Log {
 
 	/**
 	 * Prefix for our settings.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var string
@@ -34,7 +34,7 @@ class Log {
 
 	/**
 	 * The PHP version.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var string
@@ -43,7 +43,7 @@ class Log {
 
 	/**
 	 * The theme name.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var string
@@ -52,7 +52,7 @@ class Log {
 
 	/**
 	 * The theme author.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var string
@@ -61,7 +61,7 @@ class Log {
 
 	/**
 	 * The theme URI.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var string
@@ -70,7 +70,7 @@ class Log {
 
 	/**
 	 * Field-types.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @var array
@@ -79,7 +79,7 @@ class Log {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @access public
 	 * @since 1.0
 	 */
@@ -97,7 +97,7 @@ class Log {
 	public function init() {
 
 		// Early exit if this is not a request we want to log.
-		if ( ! isset( $_POST['action'] ) || 'kirki-stats' !== sanitize_text_field( wp_unslash( $_POST['action'] ) ) ) {
+		if ( ! isset( $_POST['action'] ) || 'kirki-stats' !== sanitize_text_field( wp_unslash( $_POST['action'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 			return;
 		}
 
@@ -105,12 +105,12 @@ class Log {
 		$this->get_data_from_request();
 
 		// Save data.
-		$this->save_data();		
+		$this->save_data();
 	}
 
 	/**
 	 * Get data from the request and set as object properties.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @return void
@@ -126,15 +126,15 @@ class Log {
 			'theme_version' => 'theme_version',
 		];
 
-		foreach ( $data_to_collect as $key => $property ) {			
-			if ( isset( $_POST[ $key ] ) ) {
-				$this->$property = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+		foreach ( $data_to_collect as $key => $property ) {
+			if ( isset( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+				$this->$property = sanitize_text_field( wp_unslash( $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 			}
 		}
 
 		// Set field_types.
-		if ( isset( $_POST['fieldTypes'] ) ) {
-			$field_types = wp_unslash( $_POST['fieldTypes'] );
+		if ( isset( $_POST['fieldTypes'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
+			$field_types = wp_unslash( $_POST['fieldTypes'] ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			foreach ( $field_types as $type ) {
 				$this->field_types[] = sanitize_text_field( $type );
 			}
@@ -143,7 +143,7 @@ class Log {
 
 	/**
 	 * Save data in our db.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0
 	 * @return void
@@ -164,9 +164,12 @@ class Log {
 			$option_name = $this->option_prefix . '_' . $data_key;
 
 			// Get existing data.
-			$data = get_option( $option_name, [
-				$date_key => [],
-			] );
+			$data = get_option(
+				$option_name,
+				[
+					$date_key => [],
+				]
+			);
 
 			// Make sure we have a value before increasing the counter.
 			if ( ! isset( $data[ $date_key ][ $this->$data_key ] ) ) {
@@ -185,14 +188,17 @@ class Log {
 			$option_name = $this->option_prefix . '_field_types';
 
 			// Get existing data.
-			$data = get_option( $option_name, [
-				'all'     => [
-					$date_key => [],
-				],
-				'singles' => [
-					$date_key => [],
-				],
-			] );
+			$data = get_option(
+				$option_name,
+				[
+					'all'     => [
+						$date_key => [],
+					],
+					'singles' => [
+						$date_key => [],
+					],
+				]
+			);
 
 			$added_singles = [];
 			foreach ( $this->field_types as $type ) {

@@ -19,6 +19,7 @@
  */
 
 namespace Kirki_Telemetry_Server;
+
 use Kirki_Telemetry_Server\Log;
 use Kirki_Telemetry_Server\Draw;
 
@@ -31,12 +32,18 @@ require_once __DIR__ . '/inc/log.php';
 require_once __DIR__ . '/inc/get-data.php';
 new Log();
 
-add_action( 'wp', function() {
-    if ( 'Kirki Telemetry Statistics' === get_the_title() ) {
-        add_filter( 'the_content', function() {
-            \ob_start();
-            include_once __DIR__ . '/inc/template.php';
-            return \ob_get_clean();
-        } );
-    }
-});
+add_action(
+	'wp',
+	function() {
+		if ( 'Kirki Telemetry Statistics' === get_the_title() ) {
+			add_filter(
+				'the_content',
+				function() {
+					\ob_start();
+					include_once __DIR__ . '/inc/template.php';
+					return \ob_get_clean();
+				}
+			);
+		}
+	}
+);
