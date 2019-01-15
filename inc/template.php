@@ -40,6 +40,11 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 	// Datasets.
 	$datasets = [];
 	foreach ( $all_options_from_data as $choice ) {
+		if ( 'fields_all' === $option || 'fields_single' === $option ) {
+			if ( 0 === strpos( $choice, 'kirki-' ) ) {
+				$choice = str_replace( 'kirki-', '', $choice );
+			}
+		}
 		$dataset = [
 			'label'       => $choice,
 			'fill'        => false,
