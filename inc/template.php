@@ -90,14 +90,22 @@ var kirkiStatsDrawChartLines = function( el, labels, datasets, text ) {
 </script>
 
 <div class="wrapper">
-	<p>Monthly statistics - PHP Versions.</p>
-	<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'php_version' ), 'php_version', 'PHP Versions' ); ?></div>
-	<p>Monthly statistics - Theme Name</p>
-	<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'theme_name' ), 'theme_name', 'Theme Name' ); ?></div>
-	<p>Monthly statistics - All field-types used. Duplicates are not removed from themes, so if a theme uses 10 color fields then all 10 will be registered. This helps us understand which fields are the most-used ones.</p>
-	<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'field_types' )['all'], 'fields_all', 'Fields - All' ); ?></div>
-	<p>Monthly statistics - All field-types used. Duplicates are removed, so if a theme uses 10 color fields then only 1 will be registered. This helps us understand which fields are necessary to most theme developers.</p>
-	<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'field_types' )['singles'], 'fields_single', 'Fields - Single' ); ?></div>
+	<div>
+		<p>Monthly statistics - PHP Versions.</p>
+		<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'php_version' ), 'php_version', 'PHP Versions' ); ?></div>
+	</div>
+	<div>
+		<p>Monthly statistics - Theme Name</p>
+		<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'theme_name' ), 'theme_name', 'Theme Name' ); ?></div>
+	</div>
+	<div>
+		<p>Monthly statistics - All field-types used. Duplicates are not removed from themes, so if a theme uses 10 color fields then all 10 will be registered. This helps us understand which fields are the most-used ones.</p>
+		<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'field_types' )['all'], 'fields_all', 'Fields - All' ); ?></div>
+	</div>
+	<div>
+		<p>Monthly statistics - All field-types used. Duplicates are removed, so if a theme uses 10 color fields then only 1 will be registered. This helps us understand which fields are necessary to most theme developers.</p>
+		<div><?php kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'field_types' )['singles'], 'fields_single', 'Fields - Single' ); ?></div>
+	</div>
 	<div><?php // kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'theme_author' ), 'theme_author', 'Theme Author' ); ?></div>
 	<div><?php // kirki_telemetry_stats_lines( Get_Data::get_instance()->get_settings( 'theme_uri' ), 'theme_uri', 'Theme URI' ); ?></div>
 </div>
