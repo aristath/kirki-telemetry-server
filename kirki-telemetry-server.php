@@ -18,11 +18,6 @@
  * @since       1.0
  */
 
-namespace Kirki_Telemetry_Server;
-
-use Kirki_Telemetry_Server\Log;
-use Kirki_Telemetry_Server\Draw;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -30,20 +25,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/inc/log.php';
 require_once __DIR__ . '/inc/get-data.php';
-new Log();
+new Kirki_Telemetry_Server\Log();
 
-add_action(
-	'wp',
-	function() {
-		if ( 'Kirki Telemetry Statistics' === get_the_title() ) {
-			add_filter(
-				'the_content',
-				function() {
-					\ob_start();
-					include_once __DIR__ . '/inc/template.php';
-					return \ob_get_clean();
-				}
-			);
-		}
+// phpcs:disable
+class Kirki_Telemetry_Stats_Widget extends \WP_Widget {
+	function __construct() {
+		parent::__construct( false, 'Kirki Telemetry Stats' );
 	}
-);
+	function widget( $args, $instance ) {
+		include_once __DIR__ . '/inc/template.php';
+	}
+	function update( $new_instance, $old_instance ) {}
+	function form( $instance ) {}
+}
+add_action( 'widgets_init', function() {
+	register_widget( 'Kirki_Telemetry_Stats_Widget' );
+} );
+// phpcs:enable
