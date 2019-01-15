@@ -32,8 +32,11 @@ require_once __DIR__ . '/inc/get-data.php';
 new Log();
 
 add_action( 'wp', function() {
-    if ( is_home() && isset( $_GET['action'] ) && 'kirki-telemetry-stats' === $_GET['action'] ) {
-        include_once __DIR__ . '/inc/template.php';
-        exit();
-    }    
+    if ( 'Kirki Telemetry Statistics' === get_the_title() ) {
+        add_filter( 'the_content', function() {
+            \ob_start();
+            include_once __DIR__ . '/inc/template.php';
+            return \ob_get_clean();
+        } );
+    }
 });
