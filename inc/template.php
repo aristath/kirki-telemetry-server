@@ -10,6 +10,7 @@
  */
 
 namespace Kirki_Telemetry_Server;
+
 use Kirki_Telemetry_Server\Get_Data;
 
 // Exit if accessed directly.
@@ -17,7 +18,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
+/**
+ * Renders stats for a specific option.
+ *
+ * @since 1.0
+ * @param array  $data_from_option The data we want to process.
+ * @param string $option           Used as an ID.
+ * @param string $label            The label for this graph.
+ * @param string $description      Any extra text that should be added before the graph.
+ */
+function kirki_telemetry_stats_lines( $data_from_option, $option, $label, $description = '' ) {
 
 	$labels = array_keys( $data_from_option );
 
@@ -35,7 +45,7 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 			'label'       => $choice,
 			'fill'        => false,
 			'data'        => [],
-			'borderColor' => '#' . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT) . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT) . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT),
+			'borderColor' => '#' . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT ) . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT ) . str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT ),
 		];
 		foreach ( $data_from_option as $data ) {
 			$dataset['data'][] = ( isset( $data[ $choice ] ) ) ? $data[ $choice ] : 0;
@@ -43,13 +53,14 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 		$datasets[] = $dataset;
 	}
 	?>
+	<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	<canvas id="line-chart-<?php echo esc_attr( $option ); ?>"></canvas>
 	<script>
 	kirkiStatsDrawChartLines(
 		document.getElementById( 'line-chart-<?php echo esc_attr( $option ); ?>' ),
 		<?php echo wp_json_encode( $labels ); ?>,
 		<?php echo wp_json_encode( $datasets ); ?>,
-		'<?php echo $label; ?>'
+		'<?php echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'
 	);
 	</script>
 	<?php
@@ -59,7 +70,7 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js" integrity="sha256-o8aByMEvaNTcBsw94EfRLbBrJBI+c3mjna/j4LrfyJ8=" crossorigin="anonymous"></script>
 <script>
 var kirkiStatsDrawChartLines = function( el, labels, datasets, text ) {
-    new Chart( el, {
+	new Chart( el, {
 		type: 'line',
 		data: {
 			labels: labels,
