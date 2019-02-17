@@ -66,6 +66,10 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 		'<?php echo $label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'
 	);
 	</script>
+
+	<div style="background: rgba(0,0,0,.1);line-height:1.1;padding:1em;">
+		<code style="font-size:12px;background:none;"><?php echo esc_html( wp_json_encode( $data_from_option ) ); ?></code>
+	</div>
 	<?php
 }
 
@@ -83,6 +87,9 @@ var kirkiStatsDrawChartLines = function( el, labels, datasets, text ) {
 			title: {
 				display: true,
 				text: text
+			},
+			legend: {
+				display: false
 			}
 		}
 	} );
