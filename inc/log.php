@@ -126,6 +126,11 @@ class Log {
 			'theme_version' => 'theme_version',
 		];
 
+		// This is spam.
+		if ( isset( $_POST['themeName'] ) && 'Readline Child' === $_POST['themeName'] ) {
+			return;
+		}
+
 		foreach ( $data_to_collect as $key => $property ) {
 			if ( isset( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
 				$this->$property = sanitize_text_field( wp_unslash( $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
