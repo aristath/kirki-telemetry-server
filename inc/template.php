@@ -45,6 +45,9 @@ function kirki_telemetry_stats_lines( $data_from_option, $option, $label ) {
 				$choice = str_replace( 'kirki-', '', $choice );
 			}
 		}
+		if ( 'Readline Child' === $choice ) {
+			continue;
+		}
 		$dataset = [
 			'label'       => $choice,
 			'fill'        => false,
